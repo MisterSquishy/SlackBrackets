@@ -26,6 +26,10 @@ app.message("who's up next??", async ({ message, say }) =>
 app.message("who won??", async ({ message, say }) =>
   whoWonMessageListener.handle({ message, say })
 );
+app.action("channel_select", ({ body, ack }) => {
+  ack();
+  console.log(body.actions[0].selected_channel);
+});
 app.action("start_round", ({ body, ack }) => {
   ack();
   console.log('i should start');
