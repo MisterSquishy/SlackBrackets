@@ -1,32 +1,34 @@
-const { flatten } = require('lodash')
+const { flatten } = require("lodash");
 
 exports.blocks = ({ round, results }) => {
-  const retBlocks = flatten(results.map(result => [
-    {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": result.winner + " over " + result.loser
-      }
-    },
-    {
-      "type": "context",
-      "elements": [
-        {
-          "type": "mrkdwn",
-          "text": result.winningVotes + " - " + result.losingVotes
+  const retBlocks = flatten(
+    results.map(result => [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: result.winner + " over " + result.loser
         }
-      ]
-    }
-  ]))
-  
+      },
+      {
+        type: "context",
+        elements: [
+          {
+            type: "mrkdwn",
+            text: result.winningVotes + " - " + result.losingVotes
+          }
+        ]
+      }
+    ])
+  );
+
   retBlocks.unshift({
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": ":tada: Here are the results for round " + round + "!"
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text: ":tada: Here are the results for round " + round + "!"
     }
-  })
-  
+  });
+
   return retBlocks;
-}
+};

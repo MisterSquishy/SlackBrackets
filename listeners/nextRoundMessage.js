@@ -1,5 +1,5 @@
-const matchBlocks = require('../messageBlocks/matches');
-const database = require('../database')
+const matchBlocks = require("../messageBlocks/matches");
+const database = require("../database");
 
 const handle = async ({ message, say }) => {
   try {
@@ -8,8 +8,7 @@ const handle = async ({ message, say }) => {
     say({
       blocks: matchBlocks.blocks({ round, matches })
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
   }
 };
