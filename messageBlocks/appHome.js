@@ -3,8 +3,29 @@ exports.blocks = () => [
     "type": "section",
     "text": {
       "type": "mrkdwn",
-      "text": "This doesn't work!"
+      "text": "What channel should I post in? (make sure to add me to that channel!)"
+    },
+    "accessory": {
+      "action_id": "channel_select",
+      "type": "channels_select",
+      "placeholder": {
+        "type": "plain_text",
+        "text": "Select a channel"
+      }
     }
+  },
+  {
+    "type": "divider"
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "*This doesn't work!!*"
+    }
+  },
+  {
+    "type": "divider"
   },
   {
     "type": "section",
