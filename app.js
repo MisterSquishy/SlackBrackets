@@ -1,4 +1,5 @@
 const { App } = require('@slack/bolt');
+require('dotenv').config();
 const appHomeOpenedListener = require('./listeners/appHomeOpened');
 const reactionAddedListener = require('./listeners/reactionAdded');
 const reactionRemovedListener = require('./listeners/reactionRemoved');
