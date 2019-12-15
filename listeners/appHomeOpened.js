@@ -5,24 +5,24 @@ const handleAppHomeOpened = async ({ app, event, context }) => {
       user_id: event.user,
 
       view: {
-        type: 'home',
-        callback_id: 'home_view',
+        type: "home",
+        callback_id: "home_view",
 
         blocks: [
           {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "I would *like* to build a bracket creation/editing interface here!"
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text:
+                "I would *like* to build a bracket creation/editing interface here!"
             }
           }
         ]
       }
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
   }
 };
 
-exports.handle = handleAppHomeOpened
+exports.handle = handleAppHomeOpened;

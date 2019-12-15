@@ -1,46 +1,47 @@
-const { flatten } = require('lodash')
+const { flatten } = require("lodash");
 
-const ROUND_NAMES = [ 'Northeast', 'Southeast', 'Northwest', 'Southwest' ]
+const ROUND_NAMES = ["Northeast", "Southeast", "Northwest", "Southwest"];
 
-exports.blocks = ({ round, matches }) => 
-[
+exports.blocks = ({ round, matches }) => [
   {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": ":wave: It’s time for round 1!"
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text: ":wave: It’s time for round 1!"
     }
   },
   {
-    "type": "divider"
+    type: "divider"
   },
   {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "Round " + ROUND_NAMES[round - 1]
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text: "Round " + ROUND_NAMES[round - 1]
     },
-    "fields": flatten(matches.map(match => [
-      {
-        "type": "mrkdwn",
-        "text": match.competitor1 + " vs. " + match.competitor2
-      },
-      {
-        "type": "mrkdwn",
-        "text": "`" + match.competitor1 + "` versus `" + match.competitor2 + "`"
-      }
-    ]))
+    fields: flatten(
+      matches.map(match => [
+        {
+          type: "mrkdwn",
+          text: match.competitor1 + " vs. " + match.competitor2
+        },
+        {
+          type: "mrkdwn",
+          text: "`" + match.competitor1 + "` versus `" + match.competitor2 + "`"
+        }
+      ])
+    )
   },
   {
-    "type": "divider"
+    type: "divider"
   },
   {
-    "type": "context",
-    "elements": [
+    type: "context",
+    elements: [
       {
-        "type": "mrkdwn",
-        "text": "Voting closes in 15 minutes"
+        type: "mrkdwn",
+        text: "Voting closes in 15 minutes"
       }
     ]
   }
-]
+];
