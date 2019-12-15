@@ -11,7 +11,7 @@ const handle = async ({ app, event, context }) => {
         console.log('idiot')
         return
       }
-      database.addVote({ round: round, userId: event.user, competitor: matchWithCompetitor.competitor1 === event.reaction ? 1 : 2})
+      database.addVote({ round: round, matchId: matchWithCompetitor.id, userId: event.user, competitor: matchWithCompetitor.competitor1.includes(event.reaction) ? 1 : 2})
     }
   }
   catch (error) {

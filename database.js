@@ -75,14 +75,14 @@ const getRound = () =>
     .find()
     .value();
 
-const addVote = ({ round, userId, competitor }) =>
+const addVote = ({ round, matchId, userId, competitorId }) =>
   db.get('votes')
-    .push({ round, userId, competitor }) //todo why doesnt this work
+    .push({ round, matchId, userId, competitorId })
     .write();
 
-const removeVote = ({ matchId, userId, competitor }) =>
+const removeVote = ({ round, matchId, userId, competitorId }) =>
   db.get('votes')
-    .remove({ matchId, userId, competitor })
+    .remove({ round, matchId, userId, competitorId })
     .write();
 
 const getVotes = ({ matchId, competitorId }) =>
