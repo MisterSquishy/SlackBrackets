@@ -1,6 +1,6 @@
-var low = require("lowdb");
-var FileSync = require("lowdb/adapters/FileSync");
-var adapter = new FileSync(".data/db.json");
+const low = require("lowdb");
+const FileSync = require("lowdb/adapters/FileSync"); //todo concurrency
+const adapter = new FileSync(".data/db.json");
 var db = low(adapter);
 
 const brackets = [

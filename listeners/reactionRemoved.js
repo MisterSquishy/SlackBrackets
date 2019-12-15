@@ -19,7 +19,7 @@ const handle = async ({ app, event, context }) => {
         round: round,
         matchId: matchWithCompetitor.id,
         userId: event.user,
-        competitor: matchWithCompetitor.competitor1.includes(event.reaction)
+        competitorId: matchWithCompetitor.competitor1.includes(event.reaction)
           ? 1
           : 2
       });
