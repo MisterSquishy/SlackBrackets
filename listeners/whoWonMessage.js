@@ -6,14 +6,14 @@ const handle = async ({ message, say }) => {
     const round = database.getRound().index;
     const matches = database.getMatchesByRound({ round });
     const results = matches.map(match => {
-      const competitor1Votes = database.getVotes({
+      const competitor1Votes = Object.keys(database.getVotes({
         matchId: match.id,
         competitorId: 1
-      }).length;
-      const competitor2Votes = database.getVotes({
+      })).length;
+      const competitor2Votes = Object.keys(database.getVotes({
         matchId: match.id,
         competitorId: 2
-      }).length;
+      })).length;
       console.log({ matchID: match.id, competitor1Votes, competitor2Votes })
       const competitor1Won = competitor1Votes > competitor2Votes;
       const winner = competitor1Won ? match.competitor1 : match.competitor2;

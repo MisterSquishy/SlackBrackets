@@ -95,7 +95,7 @@ const getVotes = ({ matchId, competitorId }) =>
     .filter(
       vote => vote.matchId === matchId && vote.competitorId === competitorId
     )
-    // .groupBy(vote => vote.userId) todo figure out how to do this
+    .groupBy(vote => vote.userId)
     .write();
 
 exports.getBracket = getBracket;
