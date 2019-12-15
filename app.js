@@ -26,6 +26,14 @@ app.message("who's up next??", async ({ message, say }) =>
 app.message("who won??", async ({ message, say }) =>
   whoWonMessageListener.handle({ message, say })
 );
+app.action("start_round", ({ body, ack }) => {
+  ack();
+  console.log('i should start');
+});
+app.action("end_round", ({ body, ack }) => {
+  ack();
+  console.log('i should end');
+});
 
 (async () => {
   // Start your app

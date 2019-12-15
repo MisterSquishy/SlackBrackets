@@ -14,7 +14,6 @@ const handle = async ({ message, say }) => {
         matchId: match.id,
         competitorId: 2
       })).length;
-      console.log({ matchID: match.id, competitor1Votes, competitor2Votes })
       const competitor1Won = competitor1Votes > competitor2Votes;
       const winner = competitor1Won ? match.competitor1 : match.competitor2;
       const winningVotes = competitor1Won ? competitor1Votes : competitor2Votes;
