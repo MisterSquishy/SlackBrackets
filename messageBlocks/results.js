@@ -1,5 +1,7 @@
+const { flatten } = require('lodash')
+
 exports.blocks = ({ round, results }) => {
-  const retBlocks = results.map(result => [
+  const retBlocks = flatten(results.map(result => [
     {
       "type": "section",
       "text": {
@@ -16,7 +18,7 @@ exports.blocks = ({ round, results }) => {
         }
       ]
     }
-  ]).flat()
+  ]))
   
   retBlocks.unshift({
     "type": "section",

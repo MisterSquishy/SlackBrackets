@@ -1,3 +1,5 @@
+const { flatten } = require('lodash')
+
 const ROUND_NAMES = [ 'Northeast', 'Southeast', 'Northwest', 'Southwest' ]
 
 exports.blocks = ({ round, matches }) => 
@@ -18,7 +20,7 @@ exports.blocks = ({ round, matches }) =>
       "type": "mrkdwn",
       "text": "Round " + ROUND_NAMES[round - 1]
     },
-    "fields": matches.map(match => [
+    "fields": flatten(matches.map(match => [
       {
         "type": "mrkdwn",
         "text": match.competitor1 + " vs. " + match.competitor2
@@ -27,7 +29,7 @@ exports.blocks = ({ round, matches }) =>
         "type": "mrkdwn",
         "text": "`" + match.competitor1 + "` versus `" + match.competitor2 + "`"
       }
-    ]).flat()
+    ]))
   },
   {
     "type": "divider"
