@@ -65,6 +65,8 @@ const matches = [
 ];
 
 const votes = [];
+const channel = [];
+const users = [];
 
 const round = [
   {
@@ -72,7 +74,7 @@ const round = [
   }
 ];
 
-const data = { brackets, matches, votes, round };
+const data = { brackets, matches, votes, round, channel, users };
 
 db.defaults(data).write();
 
@@ -122,6 +124,29 @@ const getVotes = ({ matchId, competitorId }) =>
     .groupBy(vote => vote.userId)
     .write();
 
+const getChannel = () =>
+  db
+    .get("channel")
+    .find()
+    .value();
+
+const putChannel = ({ channel }) =>
+    db
+      .get("channel")
+      .push({ channel })
+      .value();
+
+const getUsers = () =>
+  db
+    .get("users")
+    .value();
+
+const pushUser = ({ userId }) =>
+    db
+      .get("users")
+      .push({ userId })
+      .value();
+
 exports.getBracket = getBracket;
 exports.getMatch = getMatch;
 exports.getMatchesByRound = getMatchesByRound;
@@ -129,3 +154,7 @@ exports.getRound = getRound;
 exports.addVote = addVote;
 exports.removeVote = removeVote;
 exports.getVotes = getVotes;
+exports.getChannel = getChannel;
+exports.putChannel = putChannel;
+exports.getUsers = getUsers;
+exports.pushUser = pushUser;

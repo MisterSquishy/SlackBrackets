@@ -5,11 +5,12 @@ const handle = async ({ body, app, token }) => {
   try {
     const round = database.getRound().index;
     const matches = database.getMatchesByRound({ round });
-    const result = await app.client.chat.postMessage({
+    const users = database.getUsers();
+    users.forEach(({ userId }) => app.client.chat.postMessage({
       token,
-      channel: "ULVNA7Y4D",
+      channel: userId,
       blocks: voteBlocks.blocks({ round, matches })
-    });
+    }));
   } catch (error) {
     console.error(error);
   }

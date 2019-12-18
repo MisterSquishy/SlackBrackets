@@ -19,9 +19,24 @@ exports.blocks = () => [
   },
   {
     "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "*This doesn't work!!*"
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "Get voters to opt in"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "click over there :point_right:"
+      }
+    ],
+    "accessory": {
+      "type": "button",
+      "text": {
+        "type": "plain_text",
+        "text": ":hand:",
+        "emoji": true
+      },
+      "action_id": "get_voters"
     }
   },
   {

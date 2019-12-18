@@ -1,6 +1,5 @@
 const appHome = require("../messageBlocks/appHome");
 
-
 const handleAppHomeOpened = async ({ app, event, context }) => {
   try {
     const result = await app.client.views.publish({

@@ -5,9 +5,12 @@ const reactionAddedListener = require("./listeners/reactionAdded");
 const nextRoundMessageListener = require("./listeners/nextRoundMessage");
 const whoWonMessageListener = require("./listeners/whoWonMessage");
 const newRoundVoteListener = require("./listeners/newRoundVote");
+const channelSelectedListener = require("./listeners/channelSelected");
+const getVotersListener = require("./listeners/getVoters");
 
+const token = process.env.SLACK_BOT_TOKEN
 const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
+  token,
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
@@ -25,11 +28,11 @@ app.event("reaction_added", async ({ event, context }) =>
 // );
 app.action("channel_select", ({ body, ack }) => {
   ack();
-  console.log(body.actions[0].selected_channel);
+  channelSelectedListener.handle({ channel: body.actions[0].selected_channel });
 });
 app.action("start_round", ({ body, ack }) => {
   ack();
-  newRoundVoteListener.handle({ body, app, token: process.env.SLACK_BOT_TOKEN });
+  newRoundVoteListener.handle({ body, app, token });
 });
 app.action("end_round", ({ body, ack }) => {
   ack();
@@ -38,6 +41,10 @@ app.action("end_round", ({ body, ack }) => {
 app.action("competitor_select", ({ body, ack }) => {
   ack();
   console.log(body.actions[0].selected_option.value);
+});
+app.action("get_voters", ({ ack }) => {
+  ack();
+  getVotersListener.handle({ app, token });
 });
 
 (async () => {
