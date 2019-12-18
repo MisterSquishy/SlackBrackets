@@ -5,6 +5,7 @@ const reactionAddedListener = require("./listeners/reactionAdded");
 const reactionRemovedListener = require("./listeners/reactionRemoved");
 const nextRoundMessageListener = require("./listeners/nextRoundMessage");
 const whoWonMessageListener = require("./listeners/whoWonMessage");
+const newRoundVoteListener = require("./listeners/newRoundVote");
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -32,11 +33,15 @@ app.action("channel_select", ({ body, ack }) => {
 });
 app.action("start_round", ({ body, ack }) => {
   ack();
-  console.log('i should start');
+  newRoundVoteListener.handle({ body, app, token: process.env.SLACK_BOT_TOKEN });
 });
 app.action("end_round", ({ body, ack }) => {
   ack();
   console.log('i should end');
+});
+app.action("competitor_select", ({ body, ack }) => {
+  ack();
+  console.log(body.actions[0].selected_option.value);
 });
 
 (async () => {
