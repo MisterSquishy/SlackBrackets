@@ -14,29 +14,53 @@ const matches = [
     id: 1,
     bracketId: 1,
     round: 1,
-    competitor1: ":+1:",
-    competitor2: ":-1:"
+    competitor1: {
+      value: "+1",
+      seed: 1
+    },
+    competitor2: {
+      value: "-1",
+      seed: 16
+    }
   },
   {
     id: 2,
     bracketId: 1,
     round: 1,
-    competitor1: ":wave:",
-    competitor2: ":grin:"
+    competitor1: {
+      value: "wave",
+      seed: 2
+    },
+    competitor2: {
+      value: "grin",
+      seed: 15
+    }
   },
   {
     id: 3,
     bracketId: 1,
     round: 1,
-    competitor1: ":joy:",
-    competitor2: ":-1:"
+    competitor1: {
+      value: "joy",
+      seed: 3
+    },
+    competitor2: {
+      value: "smile",
+      seed: 14
+    }
   },
   {
     id: 4,
     bracketId: 1,
     round: 1,
-    competitor1: ":test:",
-    competitor2: ":whoops:"
+    competitor1: {
+      value: "kissing",
+      seed: 1
+    },
+    competitor2: {
+      value: "smirk",
+      seed: 1
+    }
   }
 ];
 
