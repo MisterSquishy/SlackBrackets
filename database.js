@@ -55,11 +55,11 @@ const matches = [
     round: 1,
     competitor1: {
       value: "kissing",
-      seed: 1
+      seed: 4
     },
     competitor2: {
       value: "smirk",
-      seed: 1
+      seed: 13
     }
   }
 ];
