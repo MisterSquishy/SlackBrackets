@@ -1,7 +1,7 @@
 const resultBlocks = require("../messageBlocks/results");
 const database = require("../database");
 
-const handle = async ({ message, say }) => {
+const handle = async ({ app, token }) => {
   try {
     const round = database.getRound().index;
     const matches = database.getMatchesByRound({ round });
@@ -22,7 +22,10 @@ const handle = async ({ message, say }) => {
 
       return { winner, winningVotes, loser, losingVotes };
     });
-    say({
+    const { channel } = database.getChannel();
+    const result = await app.client.chat.postMessage({
+      token,
+      channel,
       blocks: resultBlocks.blocks({ round, results })
     });
   } catch (error) {

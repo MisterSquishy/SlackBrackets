@@ -2,11 +2,11 @@ const { App } = require("@slack/bolt");
 require("dotenv").config();
 const appHomeOpenedListener = require("./listeners/appHomeOpened");
 const reactionAddedListener = require("./listeners/reactionAdded");
-const nextRoundMessageListener = require("./listeners/nextRoundMessage");
 const whoWonMessageListener = require("./listeners/whoWonMessage");
 const newRoundVoteListener = require("./listeners/newRoundVote");
 const channelSelectedListener = require("./listeners/channelSelected");
 const getVotersListener = require("./listeners/getVoters");
+const comptitorSelectedHandler = require("./listeners/competitorSelected");
 
 const token = process.env.SLACK_BOT_TOKEN
 const app = new App({
@@ -18,14 +18,8 @@ app.event("app_home_opened", async ({ event, context }) =>
   appHomeOpenedListener.handle({ app, event, context })
 );
 app.event("reaction_added", async ({ event, context }) =>
-  reactionAddedListener.handle({ app, event, context })
+  reactionAddedListener.handle({ app, event, context, token })
 );
-// app.message("who's up next??", async ({ message, say }) =>
-//   nextRoundMessageListener.handle({ message, say })
-// );
-// app.message("who won??", async ({ message, say }) =>
-//   whoWonMessageListener.handle({ message, say })
-// );
 app.action("channel_select", ({ body, ack }) => {
   ack();
   channelSelectedListener.handle({ channel: body.actions[0].selected_channel });
@@ -34,13 +28,13 @@ app.action("start_round", ({ body, ack }) => {
   ack();
   newRoundVoteListener.handle({ body, app, token });
 });
-app.action("end_round", ({ body, ack }) => {
+app.action("end_round", ({ ack }) => {
   ack();
-  console.log('i should end');
+  whoWonMessageListener.handle({ app, token })
 });
 app.action("competitor_select", ({ body, ack }) => {
   ack();
-  console.log(body.actions[0].selected_option.value);
+  comptitorSelectedHandler.handle({ user: body.user.id, value: body.actions[0].selected_option.value })
 });
 app.action("get_voters", ({ ack }) => {
   ack();

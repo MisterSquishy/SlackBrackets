@@ -7,7 +7,7 @@ exports.blocks = ({ round, results }) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: result.winner + " over " + result.loser
+          text: ":" + result.winner.value + ": over :" + result.loser.value + ":"
         }
       },
       {
