@@ -142,10 +142,10 @@ const getUsers = () =>
     .value();
 
 const pushUser = ({ userId }) =>
-    db
-      .get("users")
-      .push({ userId })
-      .value();
+  db
+    .get("users")
+    .insert({ userId })
+    .value();
 
 exports.getBracket = getBracket;
 exports.getMatch = getMatch;
