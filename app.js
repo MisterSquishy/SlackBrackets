@@ -2,7 +2,6 @@ const { App } = require("@slack/bolt");
 require("dotenv").config();
 const appHomeOpenedListener = require("./listeners/appHomeOpened");
 const reactionAddedListener = require("./listeners/reactionAdded");
-const reactionRemovedListener = require("./listeners/reactionRemoved");
 const nextRoundMessageListener = require("./listeners/nextRoundMessage");
 const whoWonMessageListener = require("./listeners/whoWonMessage");
 const newRoundVoteListener = require("./listeners/newRoundVote");
@@ -18,15 +17,12 @@ app.event("app_home_opened", async ({ event, context }) =>
 app.event("reaction_added", async ({ event, context }) =>
   reactionAddedListener.handle({ app, event, context })
 );
-app.event("reaction_removed", async ({ event, context }) =>
-  reactionRemovedListener.handle({ app, event, context })
-);
-app.message("who's up next??", async ({ message, say }) =>
-  nextRoundMessageListener.handle({ message, say })
-);
-app.message("who won??", async ({ message, say }) =>
-  whoWonMessageListener.handle({ message, say })
-);
+// app.message("who's up next??", async ({ message, say }) =>
+//   nextRoundMessageListener.handle({ message, say })
+// );
+// app.message("who won??", async ({ message, say }) =>
+//   whoWonMessageListener.handle({ message, say })
+// );
 app.action("channel_select", ({ body, ack }) => {
   ack();
   console.log(body.actions[0].selected_channel);
