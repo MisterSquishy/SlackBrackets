@@ -1,6 +1,8 @@
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync"); //todo concurrency
 const adapter = new FileSync(".data/db.json");
+const competitors = require("./competitors");
+const { chunk } = require("lodash")
 var db = low(adapter);
 
 const brackets = [
@@ -9,74 +11,26 @@ const brackets = [
   }
 ];
 
-const matches = [
-  {
-    id: 1,
-    bracketId: 1,
+const matches = chunk(competitors.get(), 2).map((competitors, index) => {
+  return {
+    id: index,
     round: 1,
     competitor1: {
-      value: "+1",
-      seed: 1
+      value: competitors[0],
     },
     competitor2: {
-      value: "-1",
-      seed: 16
-    }
-  },
-  {
-    id: 2,
-    bracketId: 1,
-    round: 1,
-    competitor1: {
-      value: "wave",
-      seed: 2
-    },
-    competitor2: {
-      value: "grin",
-      seed: 15
-    }
-  },
-  {
-    id: 3,
-    bracketId: 1,
-    round: 1,
-    competitor1: {
-      value: "joy",
-      seed: 3
-    },
-    competitor2: {
-      value: "smile",
-      seed: 14
-    }
-  },
-  {
-    id: 4,
-    bracketId: 1,
-    round: 1,
-    competitor1: {
-      value: "kissing",
-      seed: 4
-    },
-    competitor2: {
-      value: "smirk",
-      seed: 13
+      value: competitors[1],
     }
   }
-];
-
+});
 const votes = [];
 const channel = [];
 const users = [];
 const captain = {};
 
-const round = [
-  {
-    index: 1
-  }
-];
+const round = 1;
 
 const data = { brackets, matches, votes, round, channel, users, captain };
-
 db.defaults(data).write();
 
 const getBracket = ({ bracketId }) =>
@@ -84,6 +38,10 @@ const getBracket = ({ bracketId }) =>
     .get("brackets")
     .find({ id: bracketId })
     .value();
+
+const resetMatches = () =>
+  db.unset("matches").write();
+  db.defaults({ matches }).write();
 
 const getMatch = ({ id }) =>
   db
@@ -98,11 +56,26 @@ const getMatchesByRound = ({ round }) =>
     .filter(match => match.round === round)
     .value();
 
+const insertMatches = ({ matches }) =>
+  matches.forEach(match => db
+    .get("matches")
+    .push(match)
+    .value());
+
 const getRound = () =>
   db
     .get("round")
-    .find()
     .value();
+
+const incrementRound = () =>
+  db
+    .update("round", round => round + 1)
+    .write()
+
+const resetRound = () =>
+  db
+    .set("round", 1)
+    .write()
 
 const addVote = ({ round, matchId, userId, competitorId }) =>
   db
@@ -170,9 +143,13 @@ const setCaptain = ({ captain }) =>
     .write();
 
 exports.getBracket = getBracket;
+exports.resetMatches = resetMatches;
 exports.getMatch = getMatch;
 exports.getMatchesByRound = getMatchesByRound;
+exports.insertMatches = insertMatches;
 exports.getRound = getRound;
+exports.incrementRound = incrementRound;
+exports.resetRound = resetRound;
 exports.addVote = addVote;
 exports.removeVote = removeVote;
 exports.getVotes = getVotes;

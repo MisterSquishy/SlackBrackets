@@ -18,6 +18,9 @@ exports.blocks = ({ round, results }) => {
             text: result.winningVotes + " - " + result.losingVotes
           }
         ]
+      },
+      {
+        type: "divider"
       }
     ])
   );
