@@ -3,7 +3,7 @@ const database = require("../database");
 
 const handle = async ({ user, value }) => {
   try {
-    const round = database.getRound().index;	
+    const round = database.getRound();	
       const matches = database.getMatchesByRound({ round });	
       const matchWithCompetitor = matches.find(	
         match =>	

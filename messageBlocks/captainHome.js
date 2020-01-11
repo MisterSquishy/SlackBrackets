@@ -5,7 +5,7 @@ exports.blocks = () => [
       "type": "mrkdwn",
       "text": "What channel should I post in? (make sure to add me to that channel!)"
     },
-    "accessory": {
+    "accessory": { //todo just use a button action
       "action_id": "channel_select",
       "type": "channels_select",
       "placeholder": {

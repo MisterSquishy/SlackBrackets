@@ -69,11 +69,7 @@ const channel = [];
 const users = [];
 const captain = {};
 
-const round = [
-  {
-    index: 1
-  }
-];
+const round = 1;
 
 const data = { brackets, matches, votes, round, channel, users, captain };
 
@@ -101,8 +97,12 @@ const getMatchesByRound = ({ round }) =>
 const getRound = () =>
   db
     .get("round")
-    .find()
     .value();
+
+const incrementRound = () =>
+  db
+    .update("round", round => round + 1)
+    .write()
 
 const addVote = ({ round, matchId, userId, competitorId }) =>
   db

@@ -3,7 +3,7 @@ const database = require("../database");
 
 const handle = async ({ app, token }) => {
   try {
-    const round = database.getRound().index;
+    const round = database.getRound();
     const matches = database.getMatchesByRound({ round });
     const results = matches.map(match => {
       const competitor1Votes = Object.keys(database.getVotes({
@@ -32,5 +32,9 @@ const handle = async ({ app, token }) => {
     console.error(error);
   }
 };
+
+//tally votes
+
+//increment round
 
 exports.handle = handle;
