@@ -9,6 +9,7 @@ const handle = async ({ app, token }) => {
       channel,
       blocks: optInBlocks.blocks()
     });
+    database.resetUsers();
   } catch (error) {
     console.error(error);
   }

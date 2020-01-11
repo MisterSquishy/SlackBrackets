@@ -11,6 +11,7 @@ const handle = async ({ body, app, token }) => {
       channel: userId,
       blocks: voteBlocks.blocks({ round, matches })
     }));
+    database.resetVotes();
   } catch (error) {
     console.error(error);
   }
