@@ -67,6 +67,7 @@ const matches = [
 const votes = [];
 const channel = [];
 const users = [];
+const captain = {};
 
 const round = [
   {
@@ -74,7 +75,7 @@ const round = [
   }
 ];
 
-const data = { brackets, matches, votes, round, channel, users };
+const data = { brackets, matches, votes, round, channel, users, captain };
 
 db.defaults(data).write();
 
@@ -130,7 +131,7 @@ const getChannel = () =>
     .find()
     .value();
 
-const putChannel = ({ channel }) =>
+const setChannel = ({ channel }) =>
   db
     .set("channel", [ { channel } ])
     .write()
@@ -158,6 +159,16 @@ const resetVotes = () =>
     .remove()
     .write();
 
+const getCaptain = () =>
+  db
+    .get("captain")
+    .write();
+
+const setCaptain = ({ captain }) =>
+  db
+    .set("captain", { captain })
+    .write();
+
 exports.getBracket = getBracket;
 exports.getMatch = getMatch;
 exports.getMatchesByRound = getMatchesByRound;
@@ -166,8 +177,10 @@ exports.addVote = addVote;
 exports.removeVote = removeVote;
 exports.getVotes = getVotes;
 exports.getChannel = getChannel;
-exports.putChannel = putChannel;
+exports.setChannel = setChannel;
 exports.getUsers = getUsers;
 exports.pushUser = pushUser;
 exports.resetUsers = resetUsers;
 exports.resetVotes = resetVotes;
+exports.getCaptain = getCaptain;
+exports.setCaptain = setCaptain;

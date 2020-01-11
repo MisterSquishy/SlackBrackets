@@ -1,8 +1,8 @@
 const database = require("../database");
 
-const handle = async ({ channel }) => {
+const handle = async ({ user }) => {
   try {
-    database.setChannel({ channel });
+    database.setCaptain({ captain: user });
   } catch (error) {
     console.error(error);
   }
