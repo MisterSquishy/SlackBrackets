@@ -131,10 +131,9 @@ const getChannel = () =>
     .value();
 
 const putChannel = ({ channel }) =>
-    db
-      .get("channel")
-      .push({ channel })
-      .value();
+  db
+    .set("channel", [ { channel } ])
+    .write()
 
 const getUsers = () =>
   db
@@ -144,8 +143,20 @@ const getUsers = () =>
 const pushUser = ({ userId }) =>
   db
     .get("users")
-    .insert({ userId })
+    .push({ userId })
     .value();
+
+const resetUsers = () =>
+  db
+    .get("users")
+    .remove()
+    .write();
+
+const resetVotes = () =>
+  db
+    .get("votes")
+    .remove()
+    .write();
 
 exports.getBracket = getBracket;
 exports.getMatch = getMatch;
@@ -158,3 +169,5 @@ exports.getChannel = getChannel;
 exports.putChannel = putChannel;
 exports.getUsers = getUsers;
 exports.pushUser = pushUser;
+exports.resetUsers = resetUsers;
+exports.resetVotes = resetVotes;
