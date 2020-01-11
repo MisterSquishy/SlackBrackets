@@ -10,6 +10,8 @@ const handle = async ({ app, token }) => {
       blocks: optInBlocks.blocks()
     });
     database.resetUsers();
+    database.resetRound();
+    database.resetMatches();
   } catch (error) {
     console.error(error);
   }
