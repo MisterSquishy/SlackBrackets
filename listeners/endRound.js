@@ -70,7 +70,7 @@ const advanceCompetitors = ({ results, round }) => {
           value: resultPair[0].winner.value
         },
         competitor2: {
-          value: resultPair[1].winner.value
+          value: resultPair[1].winner.value // this crashes on non-powers of 2 (and the final round)
         }
       }
     });

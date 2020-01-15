@@ -41,7 +41,7 @@ const matchRow = ({ competitor1, competitor2 }) => {
   }
 }
 
-exports.blocks = ({ round, matches, voteDurationInHours = 8 }) => [
+exports.blocks = ({ round, matches, voteDurationInHours = 2 }) => [
   {
     "type": "section",
     "text": {

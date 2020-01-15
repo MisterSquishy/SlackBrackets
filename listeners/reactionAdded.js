@@ -9,13 +9,12 @@ const handle = async ({ app, event, context, token }) => {
 };
 
 const maybeAddNewVoter = async ({ app, event, context, token }) => {
-  if (event.item_user === context.botUserId &&
-      event.reaction === 'hand' &&
+  if (event.reaction === 'hand' &&
       database.getUsers().filter(({ userId }) => userId === event.user).length === 0) {
     database.pushUser({ userId: event.user });
     await app.client.chat.postMessage({
       token,
-      channel: event.user,
+      channel: event.user, //'DSDF4HLNM',
       text: "You're in!! Hang tight and wait for the next round to start."
     });
   }
