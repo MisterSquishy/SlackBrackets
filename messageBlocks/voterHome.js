@@ -8,7 +8,7 @@ exports.blocks = async () => {
       "type": "image",
       "title": {
         "type": "plain_text",
-        "text": "here's a puppy for ya",
+        "text": "here's a puppy for you",
         "emoji": true
       },
       "image_url": pup,

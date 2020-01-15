@@ -3,7 +3,8 @@ const database = require("../database");
 
 const handle = async ({ body, app, token }) => {
   try {
-    const round = database.getRound().index;
+    database.incrementRound();
+    const round = database.getRound();
     const matches = database.getMatchesByRound({ round });
     const users = database.getUsers();
     users.forEach(({ userId }) => app.client.chat.postMessage({

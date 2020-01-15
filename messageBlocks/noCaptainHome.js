@@ -7,6 +7,16 @@ exports.blocks = () => [
     }
   },
   {
+    "type": "image",
+    "title": {
+      "type": "plain_text",
+      "text": "be like this guy",
+      "emoji": true
+    },
+    "image_url": "https://media.giphy.com/media/rVZEejvVWEbug/giphy.gif",
+    "alt_text": "image1"
+  },
+  {
     "type": "actions",
     "elements": [
       {
@@ -19,5 +29,5 @@ exports.blocks = () => [
         }
       }
     ]
-  }
+  },
 ]

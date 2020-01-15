@@ -1,4 +1,5 @@
 const { flatten } = require("lodash");
+const moment = require("moment");
 
 const matchRow = ({ competitor1, competitor2 }) => {
   return {
@@ -6,9 +7,8 @@ const matchRow = ({ competitor1, competitor2 }) => {
     fields: [
       {
         type: "mrkdwn",
-        text: "`" + competitor1.seed + "` :" + competitor1.value + ": " + competitor1.value + 
-              "    _vs._    " +
-              "`" + competitor2.seed + "` :" + competitor2.value + ": " + competitor2.value
+        text: ":" + competitor1.value + ":\t\t\t_vs._\t\t\t:" + competitor2.value + ":\n" +
+              "`" + competitor1.value + "`\t\t\t   \t\t\t`" + competitor2.value + "`"
       }
     ],
     accessory: {
@@ -41,7 +41,7 @@ const matchRow = ({ competitor1, competitor2 }) => {
   }
 }
 
-exports.blocks = ({ round, matches }) => [
+exports.blocks = ({ round, matches, voteDurationInHours = 8 }) => [
   {
     "type": "section",
     "text": {
@@ -52,5 +52,15 @@ exports.blocks = ({ round, matches }) => [
   {
     "type": "divider"
   },
-  ...flatten(matches.map(match => matchRow(match)))
+  ...flatten(matches.map(match => matchRow(match))),
+  {
+    "type": "divider"
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": ":timer_clock: Voting ends in " + voteDurationInHours +" hours (" + moment().add(voteDurationInHours, 'hours').format('LT') + ")"
+    }
+  },
 ]
