@@ -1,5 +1,5 @@
 const { flatten } = require("lodash");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 const matchRow = ({ competitor1, competitor2 }) => {
   return {
@@ -7,8 +7,8 @@ const matchRow = ({ competitor1, competitor2 }) => {
     fields: [
       {
         type: "mrkdwn",
-        text: ":" + competitor1.value + ":\t\t\t_vs._\t\t\t:" + competitor2.value + ":\n" +
-              "`" + competitor1.value + "`\t\t\t   \t\t\t`" + competitor2.value + "`"
+        text: ":" + competitor1.value + ": \t :" + competitor2.value + ":\n" +
+              "`" + competitor1.value + "` _vs_ `" + competitor2.value + "`"
       }
     ],
     accessory: {
@@ -60,7 +60,7 @@ exports.blocks = ({ round, matches, voteDurationInHours = 8 }) => [
     "type": "section",
     "text": {
       "type": "mrkdwn",
-      "text": ":timer_clock: Voting ends in " + voteDurationInHours +" hours (" + moment().add(voteDurationInHours, 'hours').format('LT') + ")"
+      "text": ":timer_clock: Voting ends in " + voteDurationInHours +" hours (" + moment().tz('America/New_York').add(voteDurationInHours, 'hours').format('LT') + ")"
     }
   },
 ]
