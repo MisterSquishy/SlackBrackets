@@ -7,7 +7,6 @@ const handle = async ({ app, token }) => {
     const round = database.getRound();
     const results = await computeAndSendRoundResults({ app, token, round });
     advanceCompetitors({ results, round });
-    database.incrementRound();
   } catch (error) {
     console.error(error);
   }
@@ -16,14 +15,19 @@ const handle = async ({ app, token }) => {
 const computeAndSendRoundResults = async ({ app, token, round }) => {
   const matches = database.getMatchesByRound({ round });
   const results = matches.map(match => {
-    const competitor1Votes = Object.keys(database.getVotes({
+    const unadjustedCompetitor1Votes = Object.keys(database.getVotes({
       matchId: match.id,
       competitorId: 1
     })).length;
-    const competitor2Votes = Object.keys(database.getVotes({
+    const unadjustedCompetitor2Votes = Object.keys(database.getVotes({
       matchId: match.id,
       competitorId: 2
     })).length;
+    const { competitor1Votes, competitor2Votes } = maybeAdjustVoteCountsForTotallyAboveBoardReasons({
+      match,
+      competitor1Votes: unadjustedCompetitor1Votes,
+      competitor2Votes: unadjustedCompetitor2Votes
+    })
     const competitor1Won = competitor1Votes > competitor2Votes;
     const winner = competitor1Won ? match.competitor1 : match.competitor2;
     const winningVotes = competitor1Won ? competitor1Votes : competitor2Votes;
@@ -39,6 +43,21 @@ const computeAndSendRoundResults = async ({ app, token, round }) => {
     blocks: resultBlocks.blocks({ round, results })
   });
   return results;
+}
+
+const maybeAdjustVoteCountsForTotallyAboveBoardReasons = ({ match, competitor1Votes, competitor2Votes }) => {
+  if(competitor1Votes === competitor2Votes) {
+    console.log(`${match.competitor1.value} tied ${match.competitor2.value}`)
+    if (match.competitor1.value === 'stewart-butterfield') competitor1Votes = competitor1Votes + 1;
+    else if (match.competitor2.value === 'stewart-butterfield') competitor2Votes = competitor2Votes + 1;
+    else if (Math.random() >= 0.5) {
+      competitor1Votes = competitor1Votes + 1;
+    } else {
+      competitor2Votes = competitor2Votes + 1;
+    }
+  }
+  
+  return { competitor1Votes, competitor2Votes };
 }
 
 const advanceCompetitors = ({ results, round }) => {

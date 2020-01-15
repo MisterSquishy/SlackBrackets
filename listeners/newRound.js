@@ -3,6 +3,7 @@ const database = require("../database");
 
 const handle = async ({ body, app, token }) => {
   try {
+    database.incrementRound();
     const round = database.getRound();
     const matches = database.getMatchesByRound({ round });
     const users = database.getUsers();

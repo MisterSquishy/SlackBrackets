@@ -39,7 +39,7 @@ app.action("end_round", ({ ack }) => {
 });
 app.action("competitor_select", ({ body, ack }) => {
   ack();
-  voteReceivedListener.handle({ user: body.user.id, value: body.actions[0].selected_option.value })
+  voteReceivedListener.handle({ app, token, user: body.user.id, value: body.actions[0].selected_option.value })
 });
 app.action("get_voters", ({ ack }) => {
   ack();
