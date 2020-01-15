@@ -7,7 +7,7 @@ const matchRow = ({ competitor1, competitor2 }) => {
     fields: [
       {
         type: "mrkdwn",
-        text: ":" + competitor1.value + ": \t :" + competitor2.value + ":\n" +
+        text: ":" + competitor1.value + ": \t\t\t :" + competitor2.value + ":\n" +
               "`" + competitor1.value + "` _vs_ `" + competitor2.value + "`"
       }
     ],
