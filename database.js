@@ -39,9 +39,10 @@ const getBracket = ({ bracketId }) =>
     .find({ id: bracketId })
     .value();
 
-const resetMatches = () =>
+const resetMatches = () => {
   db.unset("matches").write();
   db.defaults({ matches }).write();
+}
 
 const getMatch = ({ id }) =>
   db
@@ -74,20 +75,19 @@ const incrementRound = () =>
 
 const resetRound = () =>
   db
-    .set("round", 1)
+    .set("round", 0)
     .write()
 
-const addVote = ({ round, matchId, userId, competitorId }) =>
+const addVote = ({ round, matchId, userId, competitorId }) => {
   db
+    .get("votes")
+    .remove({ round, matchId, userId })
+    .write();
+  return db
     .get("votes")
     .push({ round, matchId, userId, competitorId })
     .write();
-
-const removeVote = ({ round, matchId, userId, competitorId }) =>
-  db
-    .get("votes")
-    .remove({ round, matchId, userId, competitorId })
-    .write();
+}
 
 const getVotes = ({ matchId, competitorId }) =>
   db
@@ -151,7 +151,6 @@ exports.getRound = getRound;
 exports.incrementRound = incrementRound;
 exports.resetRound = resetRound;
 exports.addVote = addVote;
-exports.removeVote = removeVote;
 exports.getVotes = getVotes;
 exports.getChannel = getChannel;
 exports.setChannel = setChannel;
