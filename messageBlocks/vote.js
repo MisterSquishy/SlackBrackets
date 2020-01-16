@@ -7,8 +7,8 @@ const matchRow = ({ competitor1, competitor2 }) => {
     fields: [
       {
         type: "mrkdwn",
-        text: ":" + competitor1.value + ": \t\t\t :" + competitor2.value + ":\n" +
-              "`" + competitor1.value + "` _vs_ `" + competitor2.value + "`"
+        text: ":" + competitor1.value + ":\t\t_vs_\t\t:" + competitor2.value + ":\n" +
+              "`" + competitor1.value + "`\n_vs_ `" + competitor2.value + "`"
       }
     ],
     accessory: {
@@ -41,26 +41,33 @@ const matchRow = ({ competitor1, competitor2 }) => {
   }
 }
 
-exports.blocks = ({ round, matches, voteDurationInHours = 2 }) => [
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": ":wave: Time to vote on round " + round +"!!"
-    }
-  },
-  {
-    "type": "divider"
-  },
-  ...flatten(matches.map(match => matchRow(match))),
-  {
-    "type": "divider"
-  },
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": ":timer_clock: Voting ends in " + voteDurationInHours +" hours (" + moment().tz('America/New_York').add(voteDurationInHours, 'hours').format('LT') + ")"
-    }
-  },
-]
+exports.blocks = ({ round, matches, voteDurationInHours = 2 }) => {
+  let matchRows = [];
+  
+  matches.forEach(match => {
+    matchRows.push(matchRow(match));
+    matchRows.push({ "type": "divider" });
+  });
+  console.log(flatten(matchRows))
+  
+  return [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": ":wave: Time to vote on round " + round +"!!"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    ...flatten(matchRows),
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": ":timer_clock: Voting ends in " + voteDurationInHours +" hours (" + moment().tz('America/New_York').add(voteDurationInHours, 'hours').format('LT') + ")"
+      }
+    },
+  ];
+}
