@@ -23,7 +23,7 @@ const matchRow = ({ competitor1, competitor2 }) => {
         {
           text: {
             type: "plain_text",
-            text: ":" + competitor1.value + ":",
+            text: ":" + competitor1.value + ": (`:" + competitor1.value + ":`)",
             emoji: true
           },
           value: competitor1.value
@@ -31,7 +31,7 @@ const matchRow = ({ competitor1, competitor2 }) => {
         {
           text: {
             type: "plain_text",
-            text: ":" + competitor2.value + ":",
+            text: ":" + competitor2.value + ": (`:" + competitor2.value + ":`)",
             emoji: true
           },
           value: competitor2.value
