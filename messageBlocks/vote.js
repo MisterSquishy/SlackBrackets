@@ -7,8 +7,7 @@ const matchRow = ({ competitor1, competitor2 }) => {
     fields: [
       {
         type: "mrkdwn",
-        text: ":" + competitor1.value + ":\t\t_vs_\t\t:" + competitor2.value + ":\n" +
-              "`" + competitor1.value + "`\n_vs_ `" + competitor2.value + "`"
+        text: ":" + competitor1.value + ": `" + competitor1.value + "`\n_vs_\n:" + competitor2.value + ": `" + competitor2.value + "`"
       }
     ],
     accessory: {
@@ -23,7 +22,7 @@ const matchRow = ({ competitor1, competitor2 }) => {
         {
           text: {
             type: "plain_text",
-            text: ":" + competitor1.value + ": (`:" + competitor1.value + ":`)",
+            text: ":" + competitor1.value + ": " + competitor1.value,
             emoji: true
           },
           value: competitor1.value
@@ -31,7 +30,7 @@ const matchRow = ({ competitor1, competitor2 }) => {
         {
           text: {
             type: "plain_text",
-            text: ":" + competitor2.value + ": (`:" + competitor2.value + ":`)",
+            text: ":" + competitor2.value + ": " + competitor2.value,
             emoji: true
           },
           value: competitor2.value

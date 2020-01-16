@@ -1,6 +1,8 @@
 const resultBlocks = require("../messageBlocks/results");
 const database = require("../database");
-const { chunk } = require("lodash")
+const { chunk } = require("lodash");
+
+const MAX_MATCHES_PER_MESSAGE = 16;
 
 const handle = async ({ app, token }) => {
   try {
@@ -37,17 +39,20 @@ const computeAndSendRoundResults = async ({ app, token, round }) => {
     return { winner, winningVotes, loser, losingVotes };
   });
   const { channel } = database.getChannel();
-  const result = await app.client.chat.postMessage({
-    token,
-    channel,
-    blocks: resultBlocks.blocks({ round, results })
-  });
+  chunk(results, MAX_MATCHES_PER_MESSAGE)
+      .forEach(async resultChunk => {
+        console.log(resultChunk)
+        await app.client.chat.postMessage({
+          token,
+          channel,
+          blocks: resultBlocks.blocks({ round, results: resultChunk })
+        });
+      });
   return results;
 }
 
 const maybeAdjustVoteCountsForTotallyAboveBoardReasons = ({ match, competitor1Votes, competitor2Votes }) => {
   if(competitor1Votes === competitor2Votes) {
-    console.log(`${match.competitor1.value} tied ${match.competitor2.value}`)
     if (match.competitor1.value === 'stewart-butterfield') competitor1Votes = competitor1Votes + 1;
     else if (match.competitor2.value === 'stewart-butterfield') competitor2Votes = competitor2Votes + 1;
     else if (Math.random() >= 0.5) {
