@@ -8,7 +8,7 @@ const MAX_MATCHES_PER_MESSAGE = 16;
 const handle = async ({ body, app, token }) => {
   try {
     database.incrementRound();
-    const round = 1;//database.getRound();
+    const round = database.getRound();
     const matches = database.getMatchesByRound({ round });
     const users = database.getUsers();
     chunk(matches, MAX_MATCHES_PER_MESSAGE)
