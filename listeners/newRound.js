@@ -1,5 +1,6 @@
 const voteBlocks = require("../messageBlocks/vote");
 const database = require("../database");
+const DM = require("../utils/DM")
 
 const handle = async ({ body, app, token }) => {
   try {
@@ -7,11 +8,9 @@ const handle = async ({ body, app, token }) => {
     const round = database.getRound();
     const matches = database.getMatchesByRound({ round });
     const users = database.getUsers();
-    users.forEach(({ userId }) => app.client.chat.postMessage({
-      token,
-      channel: userId,
-      blocks: voteBlocks.blocks({ round, matches })
-    }));
+    users.forEach(async ({ userId }) => {
+      await DM.send({ app, token, user: userId, blocks: voteBlocks.blocks({ round, matches }), text: "Time to vote!" });
+    });
     database.resetVotes();
   } catch (error) {
     console.error(error);
