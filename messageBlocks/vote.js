@@ -48,7 +48,6 @@ exports.blocks = ({ round, matches, voteDurationInHours = 2 }) => {
     matchRows.push(matchRow(match));
     matchRows.push({ "type": "divider" });
   });
-  console.log(flatten(matchRows))
   
   return [
     {
