@@ -1,4 +1,5 @@
 const database = require("../database");
+const DM = require("../utils/DM")
 
 const handle = async ({ app, event, context, token }) => {
   try {
@@ -9,14 +10,12 @@ const handle = async ({ app, event, context, token }) => {
 };
 
 const maybeAddNewVoter = async ({ app, event, context, token }) => {
-  if (event.reaction === 'hand' &&
+  const { channel } = database.getChannel();
+  if (event.item.channel === channel &&
+      event.reaction === 'hand' &&
       database.getUsers().filter(({ userId }) => userId === event.user).length === 0) {
     database.pushUser({ userId: event.user });
-    await app.client.chat.postMessage({
-      token,
-      channel: event.user, //'DSDF4HLNM',
-      text: "You're in!! Hang tight and wait for the next round to start."
-    });
+    await DM.send({ app, token, user: event.user, text: "You're in!! Hang tight and wait for the next round to start." });
   }
 }
 

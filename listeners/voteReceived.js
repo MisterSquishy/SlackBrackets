@@ -1,5 +1,6 @@
 const voteBlocks = require("../messageBlocks/vote");
 const database = require("../database");
+const DM = require("../utils/DM")
 
 const handle = async ({ app, token, user, value }) => {
   try {
@@ -23,11 +24,7 @@ const handle = async ({ app, token, user, value }) => {
         ? 1	
         : 2	
     });
-    await app.client.chat.postMessage({
-      token,
-      channel: user,
-      text: "Got your vote for :" + value + ":. Change it anytime by resubmitting!"
-    });
+    await DM.send({ app, token, user, text:"Got your vote for `:" + value + ":` :" + value + ":. Change it anytime by resubmitting!" });
   } catch (error) {
     console.error(error);
   }
