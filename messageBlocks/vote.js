@@ -7,7 +7,16 @@ const matchRow = ({ competitor1, competitor2 }) => {
     fields: [
       {
         type: "mrkdwn",
-        text: ":" + competitor1.value + ": `" + competitor1.value + "`\n_vs_\n:" + competitor2.value + ": `" + competitor2.value + "`"
+        text:
+          ":" +
+          competitor1.value +
+          ": `" +
+          competitor1.value +
+          "`\n_vs_\n:" +
+          competitor2.value +
+          ": `" +
+          competitor2.value +
+          "`"
       }
     ],
     accessory: {
@@ -37,35 +46,43 @@ const matchRow = ({ competitor1, competitor2 }) => {
         }
       ]
     }
-  }
-}
+  };
+};
 
-exports.blocks = ({ round, matches, voteDurationInHours = 2 }) => {
+exports.blocks = ({ round, matches, voteDurationInMinutes = 30 }) => {
   let matchRows = [];
-  
+
   matches.forEach(match => {
     matchRows.push(matchRow(match));
-    matchRows.push({ "type": "divider" });
+    matchRows.push({ type: "divider" });
   });
-  
+
   return [
     {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": ":wave: Time to vote on round " + round +"!!"
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: ":wave: Time to vote on round " + round + "!!"
       }
     },
     {
-      "type": "divider"
+      type: "divider"
     },
     ...flatten(matchRows),
     {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": ":timer_clock: Voting ends in " + voteDurationInHours +" hours (" + moment().tz('America/New_York').add(voteDurationInHours, 'hours').format('LT') + ")"
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text:
+          ":timer_clock: Voting ends in " +
+          voteDurationInMinutes +
+          " minutes (" +
+          moment()
+            .tz("America/New_York")
+            .add(voteDurationInMinutes, "minutes")
+            .format("LT") +
+          ")"
       }
-    },
+    }
   ];
-}
+};
